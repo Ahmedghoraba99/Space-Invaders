@@ -1,4 +1,5 @@
 
+
 window.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let myButton = document.getElementById('myButton');
@@ -56,6 +57,8 @@ window.addEventListener('DOMContentLoaded', function() {
         StartGame(mainContent);
     });
 });
+
+
 
 
 
