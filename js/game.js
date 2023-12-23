@@ -1,4 +1,5 @@
-
+import {Enemy} from './Enemy.js'
+import {Ship} from './Ship.js'
 
 window.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
@@ -12,15 +13,16 @@ window.addEventListener('DOMContentLoaded', function() {
     const StartGame = function(container){
         const enemy = new Enemy(container, {}, "type");
         const enemy2 = new Enemy(container, {}, "type");
-    
         const enemy3 = new Enemy(container, {}, "type");
-    
-        setInterval(() => {
-            //TODO: Should be moved to game function DEVELOPMENT
-            enemy.horizontalMovement(container);
-            enemy2.horizontalMovement(container);
-            enemy3.horizontalMovement(container);
-        }, 100);
+        const ship1 = new Ship(mainContent);
+        // ship1.moveRight(50);
+        ship1.createBullet();
+        console.log(ship1.gun);
+        // setInterval(() => {
+        //     enemy.horizontalMovement(container);
+        //     enemy2.horizontalMovement(container);
+        //     enemy3.horizontalMovement(container);
+        // }, 100);
     }
 
     const welcomeUserMessage = (username)=>{
@@ -44,18 +46,21 @@ window.addEventListener('DOMContentLoaded', function() {
             container.appendChild(tr);
         });
     }
-
-    welcomeUserMessage(queryParams);
-    displayData(tbody);
-    myModal.show();
-    mainContent.style.display = 'none';
-    myButton.click();
-    let closeButton = document.querySelector('#close');
-    closeButton.addEventListener('click', function() {
-        myModal.hide();
-        mainContent.style.display = 'block';
-        StartGame(mainContent);
-    });
+    if(queryParams != null){
+        welcomeUserMessage(queryParams);
+        displayData(tbody);
+        myModal.show();
+        mainContent.style.display = 'none';
+        myButton.click();
+        let closeButton = document.querySelector('#close');
+        closeButton.addEventListener('click', function() {
+            myModal.hide();
+            mainContent.style.display = 'block';
+            StartGame(mainContent);
+        });
+    }else{
+        window.location.href = '../index.html';
+    }
 });
 
 

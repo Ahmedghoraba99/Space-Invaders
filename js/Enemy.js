@@ -9,19 +9,16 @@ let style = {
   "background-size": "cover",
 };
 //All enemies are put in a parent container which moves down with each hit to the wall
-class Enemy {
+export class Enemy {
   //Type may be added in the future
   #element;
-  width;
-  height;
-  left;
-  movementDirection = "right";
   constructor(container, style, type) {
     this.#element = this.#createEnemy(container, style);
     this.width = this.#element.offsetWidth;
     this.height = this.#element.offsetHeight;
     this.left = this.#element.offsetLeft;
     this.container = container;
+    this.movementDirection = "right";
     console.log(this.left, this.width, this.height);
   }
 

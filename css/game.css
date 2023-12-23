@@ -10,30 +10,14 @@ body {
     position: relative;
     width: 600px;
     border: 1px solid black;
-    height: 900px;
+    height: 780px;
     background-image: url("../images/background.png");
     background-size: 600px 900px;
-  }
-  .ship {
-    background-image: url("../images/ship.png");
-    background-size: 60px 60px;
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    bottom: 10px;
-    left: 280px;
-    background-repeat: no-repeat;
     border: 1px solid red;
-    /* add a left and right plane moveing effect */
-    transform-style: preserve-3d;
-    /* transform: rotateY(60deg); */
-    transition: transform 0.1s ease-in-out;
-    /* transform-origin: 0 50%; */
   }
+  
   .ship:hover {
-    transform: rotateY(
-      -45deg
-    ); /* Adjust the angle as needed for left turn */
+    transform: rotateY(-45deg); /* Adjust the angle as needed for left turn */
   }
   .enemies {
     position: relative;
