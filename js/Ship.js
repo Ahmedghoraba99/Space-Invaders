@@ -5,7 +5,7 @@ export class Ship{
         this.gun.style.position = 'absolute';
         this.gun.style.width = '50px';
         this.gun.style.height = '50px';
-        this.gun.style.left = '50%';
+        this.gun.style.left = '250px';
         this.gun.style.bottom = '10px';
         this.gun.style.border = '1px solid red';
         this.container = container;
@@ -30,14 +30,24 @@ export class Ship{
 
     createBullet(){
         let bullet = document.createElement('div');
-        bullet.classList.add('bullet');
-        bullet.style.position = 'absolute';
-        bullet.style.top = '-4px';
-        bullet.style.left = '45%';
+        bullet.style.position = 'fixed';
+        bullet.style.top = parseInt(this.gun.getBoundingClientRect().top) + 8 +'px';
+        bullet.style.left = parseInt(this.gun.getBoundingClientRect().left )+ 22 + 'px';
         bullet.style.width = '5px';
         bullet.style.height = '20px';
         bullet.style.backgroundColor = 'red';
         this.gun.appendChild(bullet);
+
+        const animate = () => {
+            let newTop = parseInt(bullet.style.top) - 5;
+            if (newTop > 2) {
+                bullet.style.top = newTop + 'px';
+                requestAnimationFrame(animate);
+            }else{
+                this.gun.removeChild(bullet);
+            }
+        };
+        requestAnimationFrame(animate);
     }
 }
 

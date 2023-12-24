@@ -15,15 +15,18 @@ window.addEventListener('DOMContentLoaded', function() {
         const enemy2 = new Enemy(container, {}, "type");
         const enemy3 = new Enemy(container, {}, "type");
         const ship1 = new Ship(mainContent);
-        ship1.createBullet();
+        
         document.addEventListener('keydown',function(event){
             if (event.key === 'ArrowRight') {
                 ship1.moveRight();
             } else if (event.key === 'ArrowLeft') {
                 ship1.moveLeft();
+            }else if (event.code === 'Space') {
+                console.log('bullet',event);
+                ship1.createBullet();
             }
         });
-
+        
         setInterval(() => {
             enemy.horizontalMovement(container);
             enemy2.horizontalMovement(container);
