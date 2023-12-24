@@ -1,32 +1,36 @@
 body {
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-  }
-  .main-container {
-    position: relative;
-    width: 600px;
-    border: 1px solid black;
-    height: 780px;
-    background-image: url("../images/background.png");
-    background-size: 600px 900px;
-    border: 1px solid red;
-  }
-  
-  .ship:hover {
-    transform: rotateY(-45deg); /* Adjust the angle as needed for left turn */
-  }
-  .enemies {
-    position: relative;
-    background-repeat: no-repeat;
-    border: 1px solid red;
-    background-image: url("../images/enemy.png");
-    background-size: 60px 60px;
-    width: 60px;
-    height: 60px;
-    /* z-index: 9; */
-    margin-top: 10px;
-  }
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+.main-container {
+  position: relative;
+  width: 800px;
+  border: 1px solid black;
+  height: 100vb;
+  background-image: url("../images/background.png");
+  background-size: 600px 900px;
+  border: 1px solid red;
+}
+
+.ship:hover {
+  transform: rotateY(-45deg); /* Adjust the angle as needed for left turn */
+}
+.ship {
+  background-image: url("../images/ship.png");
+  background-size: contain;
+}
+.enemies {
+  position: relative;
+  background-repeat: no-repeat;
+  border: 1px solid red;
+  background-image: url("../images/enemy.png");
+  background-size: 60px 60px;
+  width: 60px;
+  height: 60px;
+  /* z-index: 9; */
+  margin-top: 10px;
+}
