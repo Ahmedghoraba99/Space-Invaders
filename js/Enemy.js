@@ -12,18 +12,29 @@ let style = {
 export class Enemy {
   //Type may be added in the future
   #element;
-  constructor(container, style, type) {
+  constructor(container, style, type, enemiesInRow) {
+    this.enemiesInRow = enemiesInRow;
     this.#element = this.#createEnemy(container, style);
     this.width = this.#element.offsetWidth;
     this.height = this.#element.offsetHeight;
-    this.left = this.#element.offsetLeft;
     this.container = container;
     this.movementDirection = "right";
-    console.log(this.left, this.width, this.height);
+    //console.log(this.left, this.width, this.height);
+    //console.log(enemiesInRow);
   }
 
+  get left() {
+    return this.#element.offsetLeft;
+  }
+  get top() {
+    return this.#element.offsetTop;
+  }
+  get element() {
+    return this.#element;
+  }
   #createEnemy(container, style) {
     let enemiesRow = document.createElement("div");
+    enemiesRow.classList.add('enemiesRow');
     enemiesRow.style.border = "1px solid red";
     enemiesRow.style.position = "relative";
     enemiesRow.style.display = "flex";
@@ -33,7 +44,8 @@ export class Enemy {
     enemy.style = style;
     enemy.style.display = "inline-block";
     enemy.classList.add("enemies");
-    for (let index = 0; index < 3; index++) {
+    //console.log(this.enemiesInRow);
+    for (let i = 0; i < this.enemiesInRow; i++) {
       enemiesRow.appendChild(enemy.cloneNode(true));
     }
 
@@ -44,20 +56,21 @@ export class Enemy {
     let currentTop = parseInt(this.#element.style.top) || 0;
     this.#element.style.top = currentTop + 5 + "px";
     //console.log(this.#element);
+    // console.log(this.#element);
   }
 
   horizontalMovement() {
     // If element reaches the end of container, move it back to the beginning
     if (this.movementDirection === "right") {
-      this.#element.style.left = `${this.#element.offsetLeft + 5}px`;
-      if (this.#element.offsetLeft + this.width >= this.container.offsetWidth) {
+      this.#element.style.left = `${this.left + 5}px`;
+      if (this.left + this.width >= this.container.offsetWidth) {
         this.movementDirection = "left";
         this.#moveEnemiesDown();
       }
     } else {
-      this.#element.style.left = `${this.#element.offsetLeft - 5}px`;
+      this.#element.style.left = `${this.left - 5}px`;
       // console.log(this.#element.offsetLeft);
-      if (this.#element.offsetLeft <= 0) {
+      if (this.left <= 0) {
         this.movementDirection = "right";
         this.#moveEnemiesDown();
       }
@@ -66,8 +79,5 @@ export class Enemy {
 
   destroy(container) {
     container.removeChild(this.element);
-  }
-  get element() {
-    return this.#element;
   }
 }
