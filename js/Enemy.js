@@ -34,10 +34,10 @@ export class Enemy {
   }
   #createEnemy(container, style) {
     let enemiesRow = document.createElement("div");
-    enemiesRow.classList.add('enemiesRow');
+    enemiesRow.classList.add("enemiesRow");
     enemiesRow.style.border = "1px solid red";
     enemiesRow.style.position = "relative";
-    enemiesRow.style.display = "flex";
+    // enemiesRow.style.display = "flex";
     enemiesRow.style.justifyContent = "space-between";
     enemiesRow.style.width = "70%";
     let enemy = document.createElement("div");
