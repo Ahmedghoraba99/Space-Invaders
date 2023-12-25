@@ -64,7 +64,7 @@ export class Ship {
     bullet.style.top =
       parseInt(this.gun.getBoundingClientRect().top) + 8 + "px";
     bullet.style.left =
-      parseInt(this.gun.getBoundingClientRect().left) + 39 + "px";
+      parseInt(this.gun.getBoundingClientRect().left) + 35 + "px";
     bullet.classList.add("bullet");
     // bullet.style.backgroundColor = "red";
     this.gun.appendChild(bullet);
