@@ -22,7 +22,6 @@ window.addEventListener('DOMContentLoaded', function() {
             } else if (event.key === 'ArrowLeft') {
                 ship1.moveLeft();
             }else if (event.code === 'Space') {
-                console.log('bullet',event);
                 ship1.createBullet();
             }
         });

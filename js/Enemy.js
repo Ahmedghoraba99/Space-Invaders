@@ -43,8 +43,9 @@ export class Enemy {
   #moveEnemiesDown() {
     let currentTop = parseInt(this.#element.style.top) || 0;
     this.#element.style.top = currentTop + 5 + "px";
-    console.log(this.#element);
+    //console.log(this.#element);
   }
+
   horizontalMovement() {
     // If element reaches the end of container, move it back to the beginning
     if (this.movementDirection === "right") {
@@ -62,6 +63,7 @@ export class Enemy {
       }
     }
   }
+
   destroy(container) {
     container.removeChild(this.element);
   }

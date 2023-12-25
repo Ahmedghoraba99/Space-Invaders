@@ -3,8 +3,8 @@ export class Ship{
         this.gun = document.createElement('div');
         this.gun.classList.add('ship');
         this.gun.style.position = 'absolute';
-        this.gun.style.width = '50px';
-        this.gun.style.height = '50px';
+        this.gun.style.width = '80px';
+        this.gun.style.height = '80px';
         this.gun.style.left = '250px';
         this.gun.style.bottom = '10px';
         this.gun.style.border = '1px solid red';
@@ -15,7 +15,7 @@ export class Ship{
     }
 
     moveRight(step=20) {
-        if (this.currentPosition + step < this.container.clientWidth - 50) {
+        if (this.currentPosition + step < this.container.clientWidth - parseInt(this.gun.style.width)){
             this.currentPosition += step;
             this.gun.style.left = `${this.currentPosition}px`;
         }
@@ -48,6 +48,10 @@ export class Ship{
             }
         };
         requestAnimationFrame(animate);
+    }
+
+    KillEnumy(EnmyArr){
+        
     }
 }
 

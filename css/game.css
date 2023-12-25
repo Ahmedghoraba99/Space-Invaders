@@ -18,6 +18,7 @@ body {
   
   .ship:hover {
     transform: rotateY(-45deg); /* Adjust the angle as needed for left turn */
+    
   }
   .enemies {
     position: relative;
