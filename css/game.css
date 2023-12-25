@@ -1,3 +1,6 @@
+/* * {
+  border: 1px solid red;
+} */
 body {
   margin: 0;
   overflow: hidden;
@@ -14,19 +17,41 @@ body {
   height: 780px;
   background-image: url("../images/background.png");
   background-size: 600px 900px;
-  border: 1px solid red;
+}
+.all-enemies {
+  width: max-content;
+  border: 1px solid blue;
 }
 
 .ship:hover {
   transform: rotateY(-45deg);
   /* Adjust the angle as needed for left turn */
-
 }
-
+.ship {
+  background-image: url("../images/ship.png");
+  background-size: contain;
+}
+.deadEnemy {
+  background-image: none;
+  width: 60px;
+  height: 60px;
+}
+.explosion {
+  background-image: url("../images/explosion.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+}
+.bullet {
+  background-image: url("../images/bullet.png");
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+}
 .enemies {
   position: relative;
   background-repeat: no-repeat;
-  border: 1px solid red;
   background-image: url("../images/enemy.png");
   background-size: 60px 60px;
   width: 60px;
@@ -48,7 +73,7 @@ body {
   height: 100vb;
   background-image: url("../images/background.png");
   background-size: 600px 900px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .ship:hover {
@@ -64,7 +89,7 @@ body {
 .enemies {
   position: relative;
   background-repeat: no-repeat;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   background-image: url("../images/enemy.png");
   background-size: 60px 60px;
   width: 60px;
@@ -72,4 +97,3 @@ body {
   /* z-index: 9; */
   margin-top: 10px;
 }
-

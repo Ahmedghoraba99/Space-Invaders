@@ -22,36 +22,54 @@ export class Enemy {
     //console.log(this.left, this.width, this.height);
     //console.log(enemiesInRow);
   }
-
+  /**
+   * Get the offsetLeft value of the element.
+   * @return {number} The offsetLeft value of the element.
+   */
   get left() {
     return this.#element.offsetLeft;
   }
   get top() {
     return this.#element.offsetTop;
   }
+  /**
+   * Get the HTMLElement of the enemy.
+   *
+   * @return {HTMLDivElement}
+   */
   get element() {
     return this.#element;
   }
+
+  /**
+   *
+   * @param {HTMLElement} container
+   * @param {object} style
+   * @returns {HTMLElement} The created enemy Row
+   */
   #createEnemy(container, style) {
     let enemiesRow = document.createElement("div");
     enemiesRow.classList.add("enemiesRow");
-    enemiesRow.style.border = "1px solid red";
+    // enemiesRow.style.border = "1px solid red";
     enemiesRow.style.position = "relative";
     // enemiesRow.style.display = "flex";
     enemiesRow.style.justifyContent = "space-between";
-    enemiesRow.style.width = "70%";
-    let enemy = document.createElement("div");
-    enemy.style = style;
-    enemy.style.display = "inline-block";
-    enemy.classList.add("enemies");
-    //console.log(this.enemiesInRow);
+    enemiesRow.style.width = "600px";
     for (let i = 0; i < this.enemiesInRow; i++) {
-      enemiesRow.appendChild(enemy.cloneNode(true));
+      let enemy = document.createElement("div");
+      enemy.style.width = "60px";
+      enemy.style.height = "60px";
+      // enemy.style.border = "1px solid red";
+      enemy.style.display = "inline-block";
+      enemy.style.position = " relative";
+      enemy.style.left = `${i * 40}px`;
+      enemy.classList.add("enemies");
+      enemiesRow.appendChild(enemy);
     }
-
     container.appendChild(enemiesRow);
     return enemiesRow;
   }
+
   #moveEnemiesDown() {
     let currentTop = parseInt(this.#element.style.top) || 0;
     this.#element.style.top = currentTop + 5 + "px";

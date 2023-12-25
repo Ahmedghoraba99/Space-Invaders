@@ -1,6 +1,6 @@
 import { Enemy } from "./Enemy.js";
 import { Ship } from "./Ship.js";
-
+let backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
 window.addEventListener("DOMContentLoaded", function () {
   let myModal = new bootstrap.Modal(document.getElementById("myModal"));
   let myButton = document.getElementById("myButton");
@@ -11,19 +11,18 @@ window.addEventListener("DOMContentLoaded", function () {
   let queryParams = searchParams.get("name");
 
   const StartGame = function (container) {
-    const enemy = new Enemy(container, {}, "type", 7);
-    const enemy2 = new Enemy(container, {}, "type", 3);
-    const enemy3 = new Enemy(container, {}, "type", 5);
-    const ship1 = new Ship(mainContent);
+    const enemy = new Enemy(container, {}, "type", 6);
+    const enemy2 = new Enemy(container, {}, "type", 6);
+    const enemy3 = new Enemy(container, {}, "type", 6);
+    const ship1 = new Ship(mainContent, {});
     ship1.addShipMovment();
 
     setInterval(() => {
       enemy.horizontalMovement(container);
       enemy2.horizontalMovement(container);
       enemy3.horizontalMovement(container);
-      ship1.checkCollisions([...document.querySelectorAll('.enemies')]);
-      
-    }, 100);
+      ship1.checkCollisions([...document.querySelectorAll(".enemies")]);
+    }, 10);
   };
 
   const welcomeUserMessage = (username) => {
@@ -60,6 +59,7 @@ window.addEventListener("DOMContentLoaded", function () {
       myModal.hide();
       mainContent.style.display = "block";
       StartGame(mainContent);
+      backgroundMusic.play();
     });
   } else {
     window.location.href = "../index.html";

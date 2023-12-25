@@ -1,5 +1,9 @@
+// let gunSound = new Audio("../soundEffects/gunSound.mp3");
+const hitSound = new Audio("../soundEffects/invaderkilled.wav");
+const gunFired = new Audio("../soundEffects/gunFired.wav");
 export class Ship {
   /**
+   *
    * Constructor function for creating a new instance of Ship class.
    * @param {HTMLElement} container - The HTML element that will contain the ship.
    * @param {object} style - The style object for configuring the ship's appearance.
@@ -16,8 +20,8 @@ export class Ship {
     this.gun.style.width = style.width || "80px";
     this.gun.style.height = style.height || "80px";
     this.gun.style.left = style.left || "250px";
-    this.gun.style.bottom = style.bottom || "10px";
-    this.gun.style.border = style.border || "1px solid red";
+    this.gun.style.bottom = style.bottom || "5px";
+    // this.gun.style.border = style.border || "1px solid red";
     this.container = container;
     this.container.appendChild(this.gun);
     this.bullets = [];
@@ -60,10 +64,9 @@ export class Ship {
     bullet.style.top =
       parseInt(this.gun.getBoundingClientRect().top) + 8 + "px";
     bullet.style.left =
-      parseInt(this.gun.getBoundingClientRect().left) + 22 + "px";
-    bullet.style.width = "5px";
-    bullet.style.height = "20px";
-    bullet.style.backgroundColor = "red";
+      parseInt(this.gun.getBoundingClientRect().left) + 39 + "px";
+    bullet.classList.add("bullet");
+    // bullet.style.backgroundColor = "red";
     this.gun.appendChild(bullet);
     this.bullets.push(bullet);
 
@@ -106,6 +109,7 @@ export class Ship {
         this.moveLeft();
       } else if (event.code === "Space") {
         this.createBullet();
+        gunFired.play();
       }
     });
   }
@@ -140,12 +144,23 @@ export class Ship {
     this.bullets.forEach((bullet) => {
       enemies.forEach((enemy) => {
         if (this.isCollision(bullet, enemy)) {
-          enemy.remove();
-          bullet.remove();
-          this.bullets.splice(this.bullets.indexOf(bullet), 1);
-          enemies.splice(enemies.indexOf(enemy), 1);
+          console.log(parseInt(enemy.parentElement.style.width));
+          this.exlpodeAndKill(enemy, bullet);
+          // this.bullets.splice(this.bullets.indexOf(bullet), 1);
+          // enemies.splice(enemies.indexOf(enemy), 1);
         }
       });
     });
+  }
+
+  exlpodeAndKill(enemy, bullet) {
+    bullet.remove();
+    hitSound.play();
+    enemy.classList.remove("enemies");
+    enemy.classList.add("deadEnemy");
+    enemy.classList.add("explosion");
+    setTimeout(() => {
+      enemy.classList.remove("explosion");
+    }, 50);
   }
 }
