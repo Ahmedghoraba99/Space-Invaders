@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", function () {
   let mainContent = document.querySelector(".main-container");
   let searchParams = new URLSearchParams(location.search);
   let welcomeText = document.querySelector(".modal-title");
-  let tbody = this.document.getElementById("tbody");
+  let tbody = document.getElementById("tbody");
   let queryParams = searchParams.get("name");
 
   const StartGame = function (container) {

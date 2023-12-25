@@ -15,17 +15,7 @@ export class Ship {
   }
 
   moveRight(step = 20) {
-    if (this.currentPosition + step < this.container.clientWidth - 50) {
-      this.currentPosition += step;
-      this.gun.style.left = `${this.currentPosition}px`;
-    }
-  }
-
-  moveRight(step = 20) {
-    if (
-      this.currentPosition + step <
-      this.container.clientWidth - parseInt(this.gun.style.width)
-    ) {
+    if(this.currentPosition + step < this.container.clientWidth - parseInt(this.gun.style.width)){
       this.currentPosition += step;
       this.gun.style.left = `${this.currentPosition}px`;
     }
