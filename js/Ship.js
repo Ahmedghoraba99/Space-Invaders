@@ -55,7 +55,7 @@ export class Ship {
         bullet.style.top = newTop + "px";
         requestAnimationFrame(animate);
       } else {
-        this.gun.removeChild(bullet);
+        bullet.remove();
         this.bullets.shift();
       }
     };
@@ -93,8 +93,8 @@ export class Ship {
     this.bullets.forEach(bullet=>{
       enemies.forEach(enmy=>{
         if(this.isCollision(bullet,enmy)){
-          this.container.remove(enmy);
-          this.container.remove(bullet);
+          enmy.remove();
+          bullet.remove();
           this.bullets.splice(this.bullets.indexOf(bullet), 1);
           enemies.splice(enemies.indexOf(enmy),1);
         }
