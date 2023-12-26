@@ -1,6 +1,3 @@
-//Enemy class
-//Test css class
-
 import { clearAllBullets } from "./function.js";
 
 //All enemies are put in a parent container which moves down with each hit to the wall
@@ -23,8 +20,6 @@ export class Enemy {
     this.height = this.#element.offsetHeight;
     this.container = container;
     this.movementDirection = "right";
-    //console.log(this.left, this.width, this.height);
-    //console.log(enemiesInRow);
   }
   /**
    * Get the offsetLeft value of the element.
@@ -66,14 +61,9 @@ export class Enemy {
       enemy.classList.add("enemies");
       enemiesRow.appendChild(enemy);
     }
-    console.log(enemiesRow);
-    console.log();
-    // container.appendChild(enemiesRow);
     for (let i = 0; i < this.numberOfRows; i++) {
       container.appendChild(enemiesRow.cloneNode(true));
-      console.log(enemiesRow);
     }
-    console.log(container);
     return container;
   }
 

@@ -178,15 +178,3 @@ export class Ship {
     return this.#score;
   }
 }
-
-/**
- *Takes an array of enemies and Check for collisions between bullets and enemies.
- *If there is a collision, the bullet and enemy are removed.
- * @memberof Gun
- * @method checkCollisions
- * @param {Array<HTMLElement>} enemies - The array of enemies to check for collisions with.
- * @returns {void} - No return value.
- */
-
-let ggg = 5;
-export { ggg };
