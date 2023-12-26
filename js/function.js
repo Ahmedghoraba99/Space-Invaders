@@ -73,6 +73,43 @@ function isShipDestroied(enemies, object) {
   return false;
 }
 
+const welcomeUserMessage = (username) => {
+  let welcomeText = document.querySelector(".modal-title");
+  let users = JSON.parse(localStorage.getItem("users"));
+  let usernamTextWelcome = document.createElement("span");
+  usernamTextWelcome.style.color = "red";
+  usernamTextWelcome.textContent = ` ${users.find((el) => el.name === username).name}`;
+  welcomeText.appendChild(usernamTextWelcome);
+};
+
+const displayData = (container) => {
+  let users = JSON.parse(localStorage.getItem("users"));
+  users.forEach((element) => {
+    let tr = document.createElement("tr");
+    let nameRow = document.createElement("td");
+    let scoreRow = document.createElement("td");
+    nameRow.textContent = element.name;
+    scoreRow.textContent = element.lastScore;
+    tr.appendChild(nameRow);
+    tr.appendChild(scoreRow);
+    container.appendChild(tr);
+  });
+};
+
+
+const countDownTimer =()=> {
+  let timerText = document.querySelector('.timer');
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  timerText.innerHTML = ` ${minutes} : ${seconds}`;
+}
+
 export {
   foundUser,
   addUserData,
@@ -80,4 +117,7 @@ export {
   playerLost,
   isShipDestroied,
   clearAllBullets,
+  welcomeUserMessage,
+  displayData,
+  countDownTimer,
 };
