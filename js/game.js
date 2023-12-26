@@ -1,41 +1,34 @@
 import { Enemy } from "./Enemy.js";
 import { Ship } from "./Ship.js";
-import {foundUser} from "./function.js"
+import { foundUser, playerLost, isShipDestroied } from "./function.js";
 
 let backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
 window.addEventListener("DOMContentLoaded", function () {
   let myModal = new bootstrap.Modal(document.getElementById("myModal"));
   let myButton = document.getElementById("myButton");
   let mainContent = document.querySelector(".main-container");
+  let enemyContainer = document.querySelector(".all-enemies");
   let searchParams = new URLSearchParams(location.search);
   let welcomeText = document.querySelector(".modal-title");
   let tbody = document.getElementById("tbody");
   let queryParams = searchParams.get("name");
-  // let user = JSON.parse(localStorage.getItem('users'));
-  // console.log(foundUser(user,queryParams).lastScore);
-  
-  const StartGame = function (container) {
-    const enemy = new Enemy(container, {}, "type", 6);
-    const enemy2 = new Enemy(container, {}, "type", 6);
-    const enemy3 = new Enemy(container, {}, "type", 6);
-    const ship1 = new Ship(mainContent, {});
-    ship1.addShipMovment();
+  const StartGame = function (container, enemyContainer) {
+    const enemies = new Enemy(enemyContainer, {}, 5, 6);
+
+    const spaceShip = new Ship(mainContent, {});
+    spaceShip.addShipMovment();
 
     let id = setInterval(() => {
-      enemy.horizontalMovement(container);
-      enemy2.horizontalMovement(container);
-      enemy3.horizontalMovement(container);
-      ship1.checkCollisions([...document.querySelectorAll(".enemies")]);
+      enemies.addEnemyMovement(container);
+      enemies.resetTheEnemyWave();
+      spaceShip.checkCollisions([...document.querySelectorAll(".enemies")]);
+      let shipExploded = isShipDestroied(
+        [...document.querySelectorAll(".enemies")],
+        spaceShip.gun
+      );
 
-      if(document.querySelectorAll('.enemies').length === 0){
-        mainContent.style.display = "none";
-        clearInterval(id);
-        myModal.show();
-        [...document.querySelectorAll('.enemiesRow')].forEach(el=>el.remove());
-        ship1.destroy();
-        backgroundMusic.pause();
-      }
-    }, parseInt(localStorage.getItem('leavel')));
+      playerLost(shipExploded, mainContent, myModal, id, backgroundMusic);
+    }, 10);
   };
 
   const welcomeUserMessage = (username) => {
@@ -73,7 +66,7 @@ window.addEventListener("DOMContentLoaded", function () {
     closeButton.addEventListener("click", function () {
       myModal.hide();
       mainContent.style.display = "block";
-      StartGame(mainContent);
+      StartGame(mainContent, enemyContainer);
       backgroundMusic.play();
     });
   } else {

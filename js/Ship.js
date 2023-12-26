@@ -1,7 +1,8 @@
-// let gunSound = new Audio("../soundEffects/gunSound.mp3");
+// Importing audio files
 const hitSound = new Audio("../soundEffects/invaderkilled.wav");
 const gunFired = new Audio("../soundEffects/gunFired.wav");
 export class Ship {
+  #score = 0;
   /**
    *
    * Constructor function for creating a new instance of Ship class.
@@ -13,7 +14,6 @@ export class Ship {
    * @property {string} [style.bottom="10px"] - The vertical position of the ship.
    * @property {string} [style.border="1px solid red"] - The border style of the ship.
    */
-  #score = 0;
   constructor(container, style) {
     this.gun = document.createElement("div");
     this.gun.classList.add("ship");
@@ -27,7 +27,6 @@ export class Ship {
     this.container.appendChild(this.gun);
     this.bullets = [];
     this.currentPosition = parseInt(this.gun.style.left);
-    
   }
 
   /**
@@ -35,7 +34,7 @@ export class Ship {
    *
    * @param {number} step - The number of steps to move to the right. Defaults to 20.
    */
-  moveRight(step = 20) {
+  #moveRight(step = 20) {
     if (
       this.currentPosition + step <
       this.container.clientWidth - parseInt(this.gun.style.width)
@@ -49,7 +48,7 @@ export class Ship {
    *
    * @param {number} step - The number of steps to move to the left. Defaults to 20.
    */
-  moveLeft(step = 20) {
+  #moveLeft(step = 20) {
     if (this.currentPosition - step > 0) {
       this.currentPosition -= step;
       this.gun.style.left = `${this.currentPosition}px`;
@@ -61,11 +60,13 @@ export class Ship {
    * Creates a bullet element and adds it to the gun element.
    * The bullet moves up the screen until it goes off the screen.
    */
-  createBullet() {
+  #createBullet() {
     let bullet = document.createElement("div");
     bullet.style.position = "fixed";
-    bullet.style.top = parseInt(this.gun.getBoundingClientRect().top) + 8 + "px";
-    bullet.style.left =  parseInt(this.gun.getBoundingClientRect().left) + 35 + "px";
+    bullet.style.top =
+      parseInt(this.gun.getBoundingClientRect().top) + 8 + "px";
+    bullet.style.left =
+      parseInt(this.gun.getBoundingClientRect().left) + 30 + "px";
     bullet.classList.add("bullet");
     this.gun.appendChild(bullet);
     this.bullets.push(bullet);
@@ -107,11 +108,18 @@ export class Ship {
   addShipMovment() {
     document.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight") {
-        this.moveRight();
+        this.#moveRight();
       } else if (event.key === "ArrowLeft") {
-        this.moveLeft();
-      } else if (event.code === "Space") {
-        this.createBullet();
+        this.#moveLeft();
+      }
+      // else if (event.code === "Space") {
+      //   this.createBullet();
+      //   gunFired.play();
+      // }
+    });
+    document.addEventListener("keyup", (event) => {
+      if (event.code === "Space") {
+        this.#createBullet();
         gunFired.play();
       }
     });
@@ -124,7 +132,7 @@ export class Ship {
    * @param {HTMLElement} enmy - The enemy element.
    * @return {boolean} Returns true if the bullet collides with the enemy, otherwise false.
    */
-  isCollision(bullet, enmy) {
+  #isCollision(bullet, enmy) {
     const bulletPosition = bullet.getBoundingClientRect();
     const enmyPosition = enmy.getBoundingClientRect();
     return (
@@ -146,16 +154,15 @@ export class Ship {
   checkCollisions(enemies) {
     this.bullets.forEach((bullet) => {
       enemies.forEach((enemy) => {
-        if (this.isCollision(bullet, enemy)) {
-          console.log(parseInt(enemy.parentElement.style.width));
-          this.exlpodeAndKill(enemy, bullet);
+        if (this.#isCollision(bullet, enemy)) {
+          this.#exlpodeAndKill(enemy, bullet);
           this.#score += 2;
         }
       });
     });
   }
 
-  exlpodeAndKill(enemy, bullet) {
+  #exlpodeAndKill(enemy, bullet) {
     bullet.remove();
     hitSound.play();
     enemy.classList.remove("enemies");
@@ -164,9 +171,22 @@ export class Ship {
     setTimeout(() => {
       enemy.classList.remove("explosion");
     }, 50);
+    // console.log(enemy.parentElement);
   }
 
-  get score(){
+  get score() {
     return this.#score;
   }
 }
+
+/**
+ *Takes an array of enemies and Check for collisions between bullets and enemies.
+ *If there is a collision, the bullet and enemy are removed.
+ * @memberof Gun
+ * @method checkCollisions
+ * @param {Array<HTMLElement>} enemies - The array of enemies to check for collisions with.
+ * @returns {void} - No return value.
+ */
+
+let ggg = 5;
+export { ggg };

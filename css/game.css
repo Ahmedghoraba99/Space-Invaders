@@ -20,10 +20,11 @@ body {
 }
 .all-enemies {
   width: max-content;
-  border: 1px solid blue;
+  position: relative;
+  /* border: 1px solid blue; */
 }
 
-.ship:hover {
+.swerve {
   transform: rotateY(-45deg);
   /* Adjust the angle as needed for left turn */
 }

@@ -1,19 +1,23 @@
 //Enemy class
 //Test css class
-let style = {
-  url: "./img/enemy.png",
-  height: "100px",
-  width: "100px",
-  "background-image": `url('./img/enemy.png')`,
-  "background-repeat": "no-repeat",
-  "background-size": "cover",
-};
+
+import { clearAllBullets } from "./function.js";
+
 //All enemies are put in a parent container which moves down with each hit to the wall
 export class Enemy {
   //Type may be added in the future
   #element;
-  constructor(container, style, type, enemiesInRow) {
+  /**
+   * Initializes a new instance of the Enemy class.
+   *
+   * @param {Element} container - The container element where the enemy will be created.
+   * @param {string} style - The CSS style to be applied to the enemy element.
+   * @param {number} enemiesInRow - The number of enemies in each row.
+   * @param {number} numberOfRows - The number of rows of enemies.
+   */
+  constructor(container, style, enemiesInRow, numberOfRows) {
     this.enemiesInRow = enemiesInRow;
+    this.numberOfRows = numberOfRows;
     this.#element = this.#createEnemy(container, style);
     this.width = this.#element.offsetWidth;
     this.height = this.#element.offsetHeight;
@@ -34,7 +38,6 @@ export class Enemy {
   }
   /**
    * Get the HTMLElement of the enemy.
-   *
    * @return {HTMLDivElement}
    */
   get element() {
@@ -50,43 +53,44 @@ export class Enemy {
   #createEnemy(container, style) {
     let enemiesRow = document.createElement("div");
     enemiesRow.classList.add("enemiesRow");
-    // enemiesRow.style.border = "1px solid red";
     enemiesRow.style.position = "relative";
-    // enemiesRow.style.display = "flex";
     enemiesRow.style.justifyContent = "space-between";
-    enemiesRow.style.width = "600px";
+    enemiesRow.style.width = "max-content";
     for (let i = 0; i < this.enemiesInRow; i++) {
       let enemy = document.createElement("div");
       enemy.style.width = "60px";
       enemy.style.height = "60px";
-      // enemy.style.border = "1px solid red";
       enemy.style.display = "inline-block";
       enemy.style.position = " relative";
-      enemy.style.left = `${i * 40}px`;
+      enemy.style.marginLeft = "40px";
       enemy.classList.add("enemies");
       enemiesRow.appendChild(enemy);
     }
-    container.appendChild(enemiesRow);
-    return enemiesRow;
+    console.log(enemiesRow);
+    console.log();
+    // container.appendChild(enemiesRow);
+    for (let i = 0; i < this.numberOfRows; i++) {
+      container.appendChild(enemiesRow.cloneNode(true));
+      console.log(enemiesRow);
+    }
+    console.log(container);
+    return container;
   }
 
   #moveEnemiesDown() {
     let currentTop = parseInt(this.#element.style.top) || 0;
-    this.#element.style.top = currentTop + 5 + "px";
-    //console.log(this.#element);
-    // console.log(this.#element);
+    this.#element.style.top = currentTop + 20 + "px";
   }
 
-  horizontalMovement() {
-    // If element reaches the end of container, move it back to the beginning
+  addEnemyMovement() {
     if (this.movementDirection === "right") {
-      this.#element.style.left = `${this.left + 5}px`;
-      if (this.left + this.width >= this.container.offsetWidth) {
+      this.#element.style.left = `${this.left + 1}px`;
+      if (this.left + this.width >= this.#element.parentElement.offsetWidth) {
         this.movementDirection = "left";
         this.#moveEnemiesDown();
       }
     } else {
-      this.#element.style.left = `${this.left - 5}px`;
+      this.#element.style.left = `${this.left - 1}px`;
       // console.log(this.#element.offsetLeft);
       if (this.left <= 0) {
         this.movementDirection = "right";
@@ -95,7 +99,38 @@ export class Enemy {
     }
   }
 
-  destroy(container) {
-    container.removeChild(this.element);
+  /**
+   * Determines if the enemy wave is cleared. by checking if there are any
+   * enemies left in the container. (iteratively)
+   * @memberof Enemy
+   * @return {boolean} True if the enemy wave is cleared, false otherwise.
+   */
+  isEnemyWaveCleared() {
+    const enemyDivs = document.querySelectorAll(".enemies");
+    if (enemyDivs.length === 0) return true;
+    return false;
   }
+
+  /**
+   * Resets the enemy wave if it is cleared.
+   * Removes the dead enemies from the container.(class removal) and adds enemies class
+   * then moves the enemies to the top of the screen.
+   * @memberof Enemy
+   * @return {void} No return value.
+   */
+  resetTheEnemyWave() {
+    if (this.isEnemyWaveCleared()) {
+      const bullets = document.querySelectorAll(".bullet");
+      clearAllBullets(bullets);
+      const enemyDivs = document.querySelectorAll(".deadEnemy");
+      this.container.style.top = "0px";
+      for (let i = 0; i < enemyDivs.length; i++) {
+        enemyDivs[i].classList.remove("deadEnemy");
+        enemyDivs[i].classList.add("enemies");
+      }
+    }
+  }
+  // checkCollisonWithShip(shipPositionLeft, shipPosiotionTop) {
+
+  // }
 }
