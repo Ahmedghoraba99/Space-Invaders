@@ -1,6 +1,8 @@
 import { Enemy } from "./Enemy.js";
 import { Ship } from "./Ship.js";
+import {foundUser} from "./function.js"
 
+let backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
 window.addEventListener("DOMContentLoaded", function () {
   let myModal = new bootstrap.Modal(document.getElementById("myModal"));
   let myButton = document.getElementById("myButton");
@@ -9,21 +11,31 @@ window.addEventListener("DOMContentLoaded", function () {
   let welcomeText = document.querySelector(".modal-title");
   let tbody = document.getElementById("tbody");
   let queryParams = searchParams.get("name");
-
+  // let user = JSON.parse(localStorage.getItem('users'));
+  // console.log(foundUser(user,queryParams).lastScore);
+  
   const StartGame = function (container) {
-    const enemy = new Enemy(container, {}, "type", 7);
-    const enemy2 = new Enemy(container, {}, "type", 3);
-    const enemy3 = new Enemy(container, {}, "type", 5);
-    const ship1 = new Ship(mainContent);
+    const enemy = new Enemy(container, {}, "type", 6);
+    const enemy2 = new Enemy(container, {}, "type", 6);
+    const enemy3 = new Enemy(container, {}, "type", 6);
+    const ship1 = new Ship(mainContent, {});
     ship1.addShipMovment();
 
-    setInterval(() => {
+    let id = setInterval(() => {
       enemy.horizontalMovement(container);
       enemy2.horizontalMovement(container);
       enemy3.horizontalMovement(container);
-      ship1.checkCollisions([...document.querySelectorAll('.enemies')]);
-      
-    }, 100);
+      ship1.checkCollisions([...document.querySelectorAll(".enemies")]);
+
+      if(document.querySelectorAll('.enemies').length === 0){
+        mainContent.style.display = "none";
+        clearInterval(id);
+        myModal.show();
+        [...document.querySelectorAll('.enemiesRow')].forEach(el=>el.remove());
+        ship1.destroy();
+        backgroundMusic.pause();
+      }
+    }, parseInt(localStorage.getItem('leavel')));
   };
 
   const welcomeUserMessage = (username) => {
@@ -49,17 +61,20 @@ window.addEventListener("DOMContentLoaded", function () {
       container.appendChild(tr);
     });
   };
+
   if (queryParams != null) {
     welcomeUserMessage(queryParams);
     displayData(tbody);
     myModal.show();
     mainContent.style.display = "none";
     myButton.click();
+
     let closeButton = document.querySelector("#close");
     closeButton.addEventListener("click", function () {
       myModal.hide();
       mainContent.style.display = "block";
       StartGame(mainContent);
+      backgroundMusic.play();
     });
   } else {
     window.location.href = "../index.html";

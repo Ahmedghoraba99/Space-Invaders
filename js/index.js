@@ -1,30 +1,12 @@
-
-//user is found or not
-const foundUser = function(users,username){
-    return users.find(ele=>ele.name.toLowerCase() === username.toLowerCase());
-}
-
-// add user
-const addUserData = function(users,username){
-    let addObj = {
-        name: username,
-        lastScore: 0
-    };
-    users.push(addObj);
-}
-
-// validate user
-const isValidName = function(username){
-    const usernameRegex = /^[a-zA-Z_0-9]{3,16}/;
-    return usernameRegex.test(username);
-}
-
+import {foundUser , addUserData , isValidName} from './function.js'
 
 window.addEventListener('load',function(){
     let btnSumbitForm = document.forms[0];
     let errorText = document.querySelector('span');
     let users = localStorage.users === undefined ? []: JSON.parse(localStorage.users);
-    
+    let LeavelSelected = this.document.querySelector('select');
+    localStorage.setItem("leavel", '300');
+
     btnSumbitForm.addEventListener('submit',function(event){
         event.preventDefault();
         const usernameValue = document.getElementById('username').value;
@@ -37,6 +19,10 @@ window.addEventListener('load',function(){
         }else{
             errorText.innerHTML = `username must be valid and unique .`;
         }
+    });
+
+    LeavelSelected.addEventListener('change',function(){
+        localStorage.setItem('leavel', LeavelSelected.value);
     });
 });
 
