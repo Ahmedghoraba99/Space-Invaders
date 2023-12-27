@@ -7,19 +7,91 @@
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <script src="./js/index.js" type="module"></script>
+    <!-- <style>
+      @font-face {
+        font-family: arcadeFont;
+        src: url(./fonts/arcade.TTF);
+      }
+      @font-face {
+        font-family: arcadeSolid;
+        src: url(./fonts/arcadeSolid.TTF);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      body {
+        background-image: url(./images/indexBackground.jpg);
+      }
+      h1 {
+        text-align: center;
+        padding-top: 50px;
+        font-family: "arcadeFont";
+        font-weight: 800;
+        font-size: 80px;
+        color: #ade664;
+        /* overlay background */
+      }
+      .overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+        height: 100vh;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        overflow: hidden;
+      }
+      input {
+        width: 300px;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 1px solid #ade664;
+        border-radius: 10px;
+        color: #c7c7c6;
+        font-size: larger;
+      }
+      span {
+        position: relative;
+        font-family: arcadeSolid;
+        display: block;
+        color: #e68964;
+        border-radius: 10px;
+        font-weight: 400;
+        font-size: 12px;
+        margin: 10px;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 5px;
+      }
+      #submitBtn {
+        font-family: arcadeSolid;
+      }
+    </style> -->
   </head>
   <body>
-    <form action="game.html" method="get">
-      <input type="text" id="username" placeholder="Enter username..." /><br>
-      <span></span><br>
-      <select>
-        <option selected="selected" value="10">level 1</option>
-        <option value="20">level 2</option>
-        <option value="25">level 3</option>
-      </select><br>
-      <input type="submit" id="submitBtn" />
-      <br />
-    </form>
-    <span></span>
+    <div class="overlay">
+      <h1>Space Invaders</h1>
+      <form action="game.html" method="get">
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username..."
+        /><br />
+        <span></span><br />
+        <select>
+          <option selected="selected" value="10">level 1</option>
+          <option value="20">level 2</option>
+          <option value="25">level 3</option></select
+        ><br />
+        <input type="submit" id="submitBtn" />
+        <br />
+      </form>
+      <span></span>
+    </div>
   </body>
 </html>
