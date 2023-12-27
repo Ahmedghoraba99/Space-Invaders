@@ -20,6 +20,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const tbody = document.getElementById("tbody");
   const queryParams = searchParams.get("name");
   const timerDiv = document.querySelector(".timer");
+  const btnCloseGame = document.querySelector('.btn-close');
 
   const StartGame = function (container, enemyContainer) {
     const timer = countDownTimer(timerDiv);
@@ -65,6 +66,10 @@ window.addEventListener("DOMContentLoaded", function () {
       timerDiv.style.display = "block";
       backgroundMusic.play();
     });
+    btnCloseGame.addEventListener('click',function(){
+      location.href = '../index.html';
+    });
+
   } else {
     window.location.href = "../index.html";
   }
