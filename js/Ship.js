@@ -190,6 +190,16 @@ export class Ship {
       this.#removeClasses(object, ["explosion"]);
     }, 50);
   }
+  swerveEffect() {
+    this.#addClasses(this.gun, ["swerve"]);
+    setTimeout(() => {
+      this.#removeClasses(this.gun, ["swerve"]);
+    }, 50);
+  }
+  ///MODIFY TO INCREASE SCORE IN HTML
+  #increaseScore(points) {
+    this.#score += points;
+  }
   /**
    * Explode and kill an enemy
    * This function is called when a bullet collides with an enemy/Bomb.
@@ -201,17 +211,17 @@ export class Ship {
     if (enemy.classList.contains("bomb")) {
       bombExploded.play();
       this.#explosionEffect(enemy);
-      this.#score += 15;
+      this.#increaseScore(15);
       if (enemy.nextSibling && enemy.nextSibling.classList.contains("a")) {
         this.#explosionEffect(enemy.nextSibling);
-        this.#score += 2;
+        this.#increaseScore(2);
       }
       if (
         enemy.previousSibling &&
         enemy.previousSibling.classList.contains("a")
       ) {
         this.#explosionEffect(enemy.previousSibling);
-        this.#score += 2;
+        this.#increaseScore(2);
       }
     } else {
       hitSound.play();

@@ -5,7 +5,7 @@ import {
   isShipDestroied,
   welcomeUserMessage,
   displayData,
-  // countDownTimer,
+  countDownTimer,
 } from "./function.js";
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -17,12 +17,13 @@ window.addEventListener("DOMContentLoaded", function () {
   let searchParams = new URLSearchParams(location.search);
   let tbody = document.getElementById("tbody");
   let queryParams = searchParams.get("name");
+  const timerDiv = document.querySelector(".timer");
+
   const StartGame = function (container, enemyContainer) {
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
     const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
     let id = setInterval(() => {
-      // countDownTimer();
       enemies.addEnemyMovement(container);
       enemies.resetTheEnemyWave();
       spaceShip.checkCollisions([...document.querySelectorAll(".a")]);
@@ -41,7 +42,6 @@ window.addEventListener("DOMContentLoaded", function () {
       );
     }, 40);
   };
-
   if (queryParams != null) {
     welcomeUserMessage(queryParams);
     displayData(tbody);
@@ -54,6 +54,8 @@ window.addEventListener("DOMContentLoaded", function () {
       myModal.hide();
       mainContent.style.display = "block";
       StartGame(mainContent, enemyContainer);
+      countDownTimer(timerDiv);
+
       backgroundMusic.play();
     });
   } else {

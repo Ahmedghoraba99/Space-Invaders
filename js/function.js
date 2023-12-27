@@ -33,6 +33,7 @@ const playerLost = function (
   if (shipExploded || enemyContainerTouchedTheBottom(enemyContainer)) {
     mainContent.style.display = "none";
     clearInterval(id);
+    document.querySelector(".ship").remove();
     myModal.show();
     [...document.querySelectorAll(".enemiesRow")].forEach((el) => el.remove());
     backgroundMusic.pause();
@@ -68,7 +69,6 @@ function isShipDestroied(enemies, object) {
     const enemy = enemies[i];
 
     if (isShipCollided(enemy, object)) {
-      object.remove();
       hitSound.play();
       enemy.classList.remove("enemies", "a");
       enemy.classList.add("deadEnemy");
@@ -108,19 +108,20 @@ const displayData = (container) => {
   });
 };
 
-// const countDownTimer =()=> {
-//   let timerText = document.querySelector('.timer');
-//   let minutes = Math.floor(time / 60);
-//   let seconds = time % 60;
-//   if (seconds < 10) {
-//     seconds = "0" + seconds;
-//   }
-//   if (minutes < 10) {
-//     minutes = "0" + minutes;
-//   }
-//   timerText.innerHTML = ` ${minutes} : ${seconds}`;
-// }
-
+const countDownTimer = (timerDiv) => {
+  let timeInSeconds = 119; //as the timer starts a second later than the game starts
+  let count = setInterval(function () {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    timerDiv.textContent = `${minutes}:${seconds}`;
+    if (timeInSeconds === 0) {
+      clearInterval(count);
+      timerDiv.textContent = "0";
+    } else {
+      timeInSeconds--;
+    }
+  }, 1000);
+};
 export {
   foundUser,
   addUserData,
@@ -130,4 +131,5 @@ export {
   clearAllBullets,
   welcomeUserMessage,
   displayData,
+  countDownTimer,
 };
