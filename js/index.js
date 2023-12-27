@@ -1,4 +1,4 @@
-import {foundUser , addUserData , isValidName} from './function.js'
+import {foundUser , addUserData , isValidName } from './function.js'
 
 window.addEventListener('load',function(){
     let btnSumbitForm = document.forms[0];
