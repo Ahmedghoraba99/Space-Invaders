@@ -199,6 +199,7 @@ export class Ship {
   ///MODIFY TO INCREASE SCORE IN HTML
   #increaseScore(points) {
     this.#score += points;
+    document.querySelector(".score").innerText = this.#score;
   }
   /**
    * Explode and kill an enemy
@@ -226,6 +227,7 @@ export class Ship {
     } else {
       hitSound.play();
       this.#explosionEffect(enemy);
+      this.#increaseScore(2);
     }
   }
   get score() {
