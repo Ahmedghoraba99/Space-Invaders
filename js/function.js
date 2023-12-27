@@ -134,4 +134,5 @@ export {
   clearAllBullets,
   welcomeUserMessage,
   displayData,
+  countDownTimer,
 };

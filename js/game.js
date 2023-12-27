@@ -5,7 +5,7 @@ import {
   isShipDestroied,
   welcomeUserMessage,
   displayData,
-  countdown,
+  countDownTimer,
   foundUser,
 } from "./function.js";
 
@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const timerDiv = document.querySelector(".timer");
 
   const StartGame = function (container, enemyContainer) {
-    countdown(timerDiv);
+    countDownTimer(timerDiv);
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
     const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
