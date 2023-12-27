@@ -40,6 +40,7 @@ const playerLost = function (
     document.querySelector(".all-enemies").style.top = 0 + "px";
   }
 };
+
 function isShipCollided(enmy, object) {
   const objectPosition = object.getBoundingClientRect();
   const enmyPosition = enmy.getBoundingClientRect();
@@ -50,19 +51,21 @@ function isShipCollided(enmy, object) {
     objectPosition.bottom > enmyPosition.top
   );
 }
+
 const clearAllBullets = function (bullets) {
   bullets.forEach((bullet) => {
     bullet.remove();
   });
 };
+
 function enemyContainerTouchedTheBottom(container) {
   const containerPosition = container.getBoundingClientRect();
   const containerBottom = containerPosition.bottom;
   const windowHeight =
     window.innerHeight || document.documentElement.clientHeight;
-
   return containerBottom >= windowHeight;
 }
+
 function isShipDestroied(enemies, object) {
   //Note: dosen't work with forEach loop
   for (let i = 0; i < enemies.length; i++) {
@@ -131,5 +134,4 @@ export {
   clearAllBullets,
   welcomeUserMessage,
   displayData,
-  countDownTimer,
 };
