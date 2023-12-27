@@ -61,6 +61,8 @@ window.addEventListener("DOMContentLoaded", function () {
       myModal.hide();
       mainContent.style.display = "block";
       StartGame(mainContent, enemyContainer);
+      document.querySelector(".score").textContent = 0;
+      timerDiv.style.display = "block";
       backgroundMusic.play();
     });
   } else {
