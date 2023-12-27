@@ -27,9 +27,10 @@ const playerLost = function (
   mainContent,
   myModal,
   id,
-  backgroundMusic
+  backgroundMusic,
+  enemyContainer
 ) {
-  if (shipExploded) {
+  if (shipExploded || enemyContainerTouchedTheBottom(enemyContainer)) {
     mainContent.style.display = "none";
     clearInterval(id);
     myModal.show();
@@ -53,6 +54,14 @@ const clearAllBullets = function (bullets) {
     bullet.remove();
   });
 };
+function enemyContainerTouchedTheBottom(container) {
+  const containerPosition = container.getBoundingClientRect();
+  const containerBottom = containerPosition.bottom;
+  const windowHeight =
+    window.innerHeight || document.documentElement.clientHeight;
+
+  return containerBottom >= windowHeight;
+}
 function isShipDestroied(enemies, object) {
   //Note: dosen't work with forEach loop
   for (let i = 0; i < enemies.length; i++) {
@@ -61,7 +70,7 @@ function isShipDestroied(enemies, object) {
     if (isShipCollided(enemy, object)) {
       object.remove();
       hitSound.play();
-      enemy.classList.remove("enemies");
+      enemy.classList.remove("enemies", "a");
       enemy.classList.add("deadEnemy");
       enemy.classList.add("explosion");
       setTimeout(() => {
@@ -79,7 +88,9 @@ const welcomeUserMessage = (username) => {
   let users = JSON.parse(localStorage.getItem("users"));
   let usernamTextWelcome = document.createElement("span");
   usernamTextWelcome.style.color = "red";
-  usernamTextWelcome.textContent = ` ${users.find((el) => el.name === username).name}`;
+  usernamTextWelcome.textContent = ` ${
+    users.find((el) => el.name === username).name
+  }`;
   welcomeText.appendChild(usernamTextWelcome);
 };
 
@@ -97,19 +108,18 @@ const displayData = (container) => {
   });
 };
 
-
-const countDownTimer =()=> {
-  let timerText = document.querySelector('.timer');
-  let minutes = Math.floor(time / 60);
-  let seconds = time % 60;
-  if (seconds < 10) {
-    seconds = "0" + seconds;
-  }
-  if (minutes < 10) {
-    minutes = "0" + minutes;
-  }
-  timerText.innerHTML = ` ${minutes} : ${seconds}`;
-}
+// const countDownTimer =()=> {
+//   let timerText = document.querySelector('.timer');
+//   let minutes = Math.floor(time / 60);
+//   let seconds = time % 60;
+//   if (seconds < 10) {
+//     seconds = "0" + seconds;
+//   }
+//   if (minutes < 10) {
+//     minutes = "0" + minutes;
+//   }
+//   timerText.innerHTML = ` ${minutes} : ${seconds}`;
+// }
 
 export {
   foundUser,
@@ -120,5 +130,4 @@ export {
   clearAllBullets,
   welcomeUserMessage,
   displayData,
-  countDownTimer,
 };

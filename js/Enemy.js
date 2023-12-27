@@ -1,8 +1,6 @@
 import { clearAllBullets } from "./function.js";
-
 //All enemies are put in a parent container which moves down with each hit to the wall
 export class Enemy {
-  //Type may be added in the future
   #element;
   /**
    * Initializes a new instance of the Enemy class.
@@ -32,7 +30,7 @@ export class Enemy {
     return this.#element.offsetTop;
   }
   /**
-   * Get the HTMLElement of the enemy.
+   * Get the HTMLElement of the enemy container.
    * @return {HTMLDivElement}
    */
   get element() {
@@ -40,7 +38,11 @@ export class Enemy {
   }
 
   /**
-   *
+   * Creates an enemy row and adds it to the container.
+   * Each enemy is created with a margin of 40px.
+   * Each enemy has a width of 60px and a height of 60px.
+   * The enemies are positioned relative to the container.
+   * The enemies are positioned in a row with a margin of 40px.
    * @param {HTMLElement} container
    * @param {object} style
    * @returns {HTMLElement} The created enemy Row
@@ -58,6 +60,9 @@ export class Enemy {
       enemy.style.display = "inline-block";
       enemy.style.position = " relative";
       enemy.style.marginLeft = "40px";
+      if (i == 0) {
+        enemy.style.marginLeft = "0px";
+      }
       enemy.classList.add("enemies");
       enemy.classList.add("a");
       enemiesRow.appendChild(enemy);
@@ -65,6 +70,7 @@ export class Enemy {
     for (let i = 0; i < this.numberOfRows; i++) {
       container.appendChild(enemiesRow.cloneNode(true));
     }
+    this.#createRandomBombs();
     return container;
   }
 
@@ -96,8 +102,8 @@ export class Enemy {
    * @memberof Enemy
    * @return {boolean} True if the enemy wave is cleared, false otherwise.
    */
-  isEnemyWaveCleared() {
-    const enemyDivs = document.querySelectorAll(".enemies");
+  #isEnemyWaveCleared() {
+    const enemyDivs = document.querySelectorAll(".a");
     if (enemyDivs.length === 0) return true;
     return false;
   }
@@ -110,7 +116,7 @@ export class Enemy {
    * @return {void} No return value.
    */
   resetTheEnemyWave() {
-    if (this.isEnemyWaveCleared()) {
+    if (this.#isEnemyWaveCleared()) {
       const bullets = document.querySelectorAll(".bullet");
       clearAllBullets(bullets);
       const enemyDivs = document.querySelectorAll(".deadEnemy");
@@ -120,32 +126,41 @@ export class Enemy {
         enemyDivs[i].classList.add("enemies");
         enemyDivs[i].classList.add("a");
       }
-      this.createRandomBombs();
+      this.#createRandomBombs();
     }
   }
-  createRandomBombs() {
+  #createRandomBombs() {
     const placesOfBombs = generateRandomNumbersLessThan(
       5,
       this.enemiesInRow * this.numberOfRows
     );
-    console.log(placesOfBombs);
-    const allEnemies = document.querySelectorAll(".enemies");
+    const allEnemies = document.querySelectorAll(".a");
     // console.log(this.#element.children[0]);
     for (let i = 0; i < placesOfBombs.length; i++) {
       let currentNumber = placesOfBombs[i];
-      console.log("shit");
-      allEnemies[currentNumber].classList.add("bomb");
       allEnemies[currentNumber].classList.remove("enemies");
+      allEnemies[currentNumber].classList.add("bomb");
     }
   }
 }
+/**
+ * Generates an array of random numbers less than a given maximum number.
+ * The generated numbers are unique and at least are 1 number apart from each other.
+ * @param {number} arrLength - The length of the array to be generated.
+ * @param {number} maxNumber - The maximum number for the random numbers.
+ * @return {number[]} The array of random numbers less than the maximum number.
+ */
 function generateRandomNumbersLessThan(arrLength, maxNumber) {
   const randomNumbers = [];
-
-  for (let i = 0; i < arrLength; i++) {
+  do {
     const randomNumber = Math.floor(Math.random() * maxNumber);
-    randomNumbers.push(randomNumber);
-  }
-
+    if (
+      !randomNumbers.includes(randomNumber) &&
+      !randomNumbers.includes(randomNumber + 1) &&
+      !randomNumbers.includes(randomNumber - 1)
+    ) {
+      randomNumbers.push(randomNumber);
+    }
+  } while (randomNumbers.length < arrLength);
   return randomNumbers;
 }

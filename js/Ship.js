@@ -1,6 +1,7 @@
 // Importing audio files
 const hitSound = new Audio("../soundEffects/invaderkilled.wav");
 const gunFired = new Audio("../soundEffects/gunFired.wav");
+const bombExploded = new Audio("../soundEffects/bombSound.mp3");
 export class Ship {
   #score = 0;
   /**
@@ -112,10 +113,6 @@ export class Ship {
       } else if (event.key === "ArrowLeft") {
         this.#moveLeft();
       }
-      // else if (event.code === "Space") {
-      //   this.createBullet();
-      //   gunFired.play();
-      // }
     });
     document.addEventListener("keyup", (event) => {
       if (event.code === "Space") {
@@ -156,25 +153,71 @@ export class Ship {
       enemies.forEach((enemy) => {
         if (this.#isCollision(bullet, enemy)) {
           this.#exlpodeAndKill(enemy, bullet);
-          this.#score += 2;
         }
       });
     });
   }
-
-  #exlpodeAndKill(enemy, bullet) {
-    bullet.remove();
-    hitSound.play();
-    enemy.classList.remove("enemies");
-    enemy.classList.remove("a");
-    enemy.classList.add("deadEnemy");
-    enemy.classList.add("explosion");
-    setTimeout(() => {
-      enemy.classList.remove("explosion");
-    }, 50);
-    // console.log(enemy.parentElement);
+  /**
+   * Remove classes from an element
+   * @param {HTMLElement} element
+   * @param {string[]} classes
+   */
+  #removeClasses(element, classes) {
+    element.classList.remove(...classes);
   }
 
+  /**
+   * Add classes to an element
+   * @param {HTMLElement} element
+   * @param {string[]} classes
+   */
+  #addClasses(element, classes) {
+    element.classList.add(...classes);
+  }
+  /**
+   * Updates the object to create an explosion effect.
+   *
+   * @param {HTMLElement} object - The object to update.
+   * @return {void} No return value.
+   */
+  #explosionEffect(object) {
+    this.#removeClasses(object, ["a", "enemies"]);
+    if (object.classList.contains("bomb")) {
+      this.#removeClasses(object, ["bomb"]);
+    }
+    this.#addClasses(object, ["deadEnemy", "explosion"]);
+    setTimeout(() => {
+      this.#removeClasses(object, ["explosion"]);
+    }, 50);
+  }
+  /**
+   * Explode and kill an enemy
+   * This function is called when a bullet collides with an enemy/Bomb.
+   * @param {HTMLElement} enemy
+   * @param {HTMLElement} bullet
+   */
+  #exlpodeAndKill(enemy, bullet) {
+    bullet.remove();
+    if (enemy.classList.contains("bomb")) {
+      bombExploded.play();
+      this.#explosionEffect(enemy);
+      this.#score += 15;
+      if (enemy.nextSibling && enemy.nextSibling.classList.contains("a")) {
+        this.#explosionEffect(enemy.nextSibling);
+        this.#score += 2;
+      }
+      if (
+        enemy.previousSibling &&
+        enemy.previousSibling.classList.contains("a")
+      ) {
+        this.#explosionEffect(enemy.previousSibling);
+        this.#score += 2;
+      }
+    } else {
+      hitSound.play();
+      this.#explosionEffect(enemy);
+    }
+  }
   get score() {
     return this.#score;
   }
