@@ -166,6 +166,7 @@ export class Ship {
     bullet.remove();
     hitSound.play();
     enemy.classList.remove("enemies");
+    enemy.classList.remove("a");
     enemy.classList.add("deadEnemy");
     enemy.classList.add("explosion");
     setTimeout(() => {

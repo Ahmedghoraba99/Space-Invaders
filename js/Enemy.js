@@ -59,6 +59,7 @@ export class Enemy {
       enemy.style.position = " relative";
       enemy.style.marginLeft = "40px";
       enemy.classList.add("enemies");
+      enemy.classList.add("a");
       enemiesRow.appendChild(enemy);
     }
     for (let i = 0; i < this.numberOfRows; i++) {
@@ -74,13 +75,13 @@ export class Enemy {
 
   addEnemyMovement() {
     if (this.movementDirection === "right") {
-      this.#element.style.left = `${this.left + 1}px`;
+      this.#element.style.left = `${this.left + 3}px`;
       if (this.left + this.width >= this.#element.parentElement.offsetWidth) {
         this.movementDirection = "left";
         this.#moveEnemiesDown();
       }
     } else {
-      this.#element.style.left = `${this.left - 1}px`;
+      this.#element.style.left = `${this.left - 3}px`;
       // console.log(this.#element.offsetLeft);
       if (this.left <= 0) {
         this.movementDirection = "right";
@@ -117,10 +118,34 @@ export class Enemy {
       for (let i = 0; i < enemyDivs.length; i++) {
         enemyDivs[i].classList.remove("deadEnemy");
         enemyDivs[i].classList.add("enemies");
+        enemyDivs[i].classList.add("a");
       }
+      this.createRandomBombs();
     }
   }
-  // checkCollisonWithShip(shipPositionLeft, shipPosiotionTop) {
+  createRandomBombs() {
+    const placesOfBombs = generateRandomNumbersLessThan(
+      5,
+      this.enemiesInRow * this.numberOfRows
+    );
+    console.log(placesOfBombs);
+    const allEnemies = document.querySelectorAll(".enemies");
+    // console.log(this.#element.children[0]);
+    for (let i = 0; i < placesOfBombs.length; i++) {
+      let currentNumber = placesOfBombs[i];
+      console.log("shit");
+      allEnemies[currentNumber].classList.add("bomb");
+      allEnemies[currentNumber].classList.remove("enemies");
+    }
+  }
+}
+function generateRandomNumbersLessThan(arrLength, maxNumber) {
+  const randomNumbers = [];
 
-  // }
+  for (let i = 0; i < arrLength; i++) {
+    const randomNumber = Math.floor(Math.random() * maxNumber);
+    randomNumbers.push(randomNumber);
+  }
+
+  return randomNumbers;
 }

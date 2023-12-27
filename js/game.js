@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", function () {
   let queryParams = searchParams.get("name");
   const StartGame = function (container, enemyContainer) {
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
+    enemies.createRandomBombs();
 
     const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
@@ -21,9 +22,9 @@ window.addEventListener("DOMContentLoaded", function () {
     let id = setInterval(() => {
       enemies.addEnemyMovement(container);
       enemies.resetTheEnemyWave();
-      spaceShip.checkCollisions([...document.querySelectorAll(".enemies")]);
+      spaceShip.checkCollisions([...document.querySelectorAll(".a")]);
       let shipExploded = isShipDestroied(
-        [...document.querySelectorAll(".enemies")],
+        [...document.querySelectorAll(".a")],
         spaceShip.gun
       );
 

@@ -35,6 +35,7 @@ const playerLost = function (
     myModal.show();
     [...document.querySelectorAll(".enemiesRow")].forEach((el) => el.remove());
     backgroundMusic.pause();
+    document.querySelector(".all-enemies").style.top = 0 + "px";
   }
 };
 function isShipCollided(enmy, object) {
