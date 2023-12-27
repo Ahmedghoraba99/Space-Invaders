@@ -39,6 +39,8 @@ const playerLost = function (
     document.querySelector(".all-enemies").style.top = 0 + "px";
   }
 };
+
+
 function isShipCollided(enmy, object) {
   const objectPosition = object.getBoundingClientRect();
   const enmyPosition = enmy.getBoundingClientRect();
@@ -49,19 +51,20 @@ function isShipCollided(enmy, object) {
     objectPosition.bottom > enmyPosition.top
   );
 }
+
 const clearAllBullets = function (bullets) {
   bullets.forEach((bullet) => {
     bullet.remove();
   });
 };
+
 function enemyContainerTouchedTheBottom(container) {
   const containerPosition = container.getBoundingClientRect();
   const containerBottom = containerPosition.bottom;
-  const windowHeight =
-    window.innerHeight || document.documentElement.clientHeight;
-
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
   return containerBottom >= windowHeight;
 }
+
 function isShipDestroied(enemies, object) {
   //Note: dosen't work with forEach loop
   for (let i = 0; i < enemies.length; i++) {
@@ -108,18 +111,20 @@ const displayData = (container) => {
   });
 };
 
-// const countDownTimer =()=> {
-//   let timerText = document.querySelector('.timer');
-//   let minutes = Math.floor(time / 60);
-//   let seconds = time % 60;
-//   if (seconds < 10) {
-//     seconds = "0" + seconds;
-//   }
-//   if (minutes < 10) {
-//     minutes = "0" + minutes;
-//   }
-//   timerText.innerHTML = ` ${minutes} : ${seconds}`;
-// }
+const countdown = (timerDiv)=>{
+  let timeInSeconds = 120;
+  setInterval(function(){
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    timerDiv.textContent = `${minutes}:${seconds}`;
+    if (timeInSeconds === 0) {
+      clearInterval(countdown);
+      timerDiv.textContent = '0';
+    } else {
+      timeInSeconds--;
+    }
+  }, 1000);
+}
 
 export {
   foundUser,
@@ -130,4 +135,5 @@ export {
   clearAllBullets,
   welcomeUserMessage,
   displayData,
+  countdown,
 };

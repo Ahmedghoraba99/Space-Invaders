@@ -5,7 +5,8 @@ import {
   isShipDestroied,
   welcomeUserMessage,
   displayData,
-  // countDownTimer,
+  countdown,
+  foundUser
 } from "./function.js";
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -17,12 +18,18 @@ window.addEventListener("DOMContentLoaded", function () {
   let searchParams = new URLSearchParams(location.search);
   let tbody = document.getElementById("tbody");
   let queryParams = searchParams.get("name");
+  const timerDiv = document.querySelector(".timer");
+  const score = document.querySelector('.score');
+  let users = JSON.parse(localStorage.getItem('users'));
+  score.textContent  = foundUser(users,queryParams).lastScore;
+
   const StartGame = function (container, enemyContainer) {
+    countdown(timerDiv);
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
     const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
+    
     let id = setInterval(() => {
-      // countDownTimer();
       enemies.addEnemyMovement(container);
       enemies.resetTheEnemyWave();
       spaceShip.checkCollisions([...document.querySelectorAll(".a")]);

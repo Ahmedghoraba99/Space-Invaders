@@ -1,6 +1,11 @@
-* {
+/* * {
   border: 1px solid red;
+} */
+@font-face {
+  font-family: arcadeFont;
+  src: url(../fonts/arcade.TTF);
 }
+
 body {
   margin: 0;
   overflow: hidden;
@@ -105,4 +110,22 @@ body {
   height: 60px;
   /* z-index: 9; */
   margin-top: 10px;
+}
+
+.timer {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-family: arcadeFont;
+  color: #4cff00;
+  font-size: 30px;
+}
+
+.score {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  font-family: arcadeFont;
+  color: #4cff00;
+  font-size: 30px;
 }
