@@ -1,5 +1,4 @@
 const hitSound = new Audio("../soundEffects/invaderkilled.wav");
-
 //user is found or not
 const foundUser = function (users, username) {
   let user = users.find(
@@ -8,9 +7,7 @@ const foundUser = function (users, username) {
   return user;
 };
 
-const updateUser = function(users){
-
-}
+const updateUser = function (users) {};
 
 // add user
 const addUserData = function (users, username) {
@@ -36,9 +33,14 @@ const playerLost = function (
   enemyContainer,
   username,
   timerDiv,
-  spaceShip
+  spaceShip,
+  count
 ) {
-  if (shipExploded || enemyContainerTouchedTheBottom(enemyContainer)|| timerIsFinshed(timerDiv)) {
+  if (
+    shipExploded ||
+    enemyContainerTouchedTheBottom(enemyContainer) ||
+    timerIsFinshed(timerDiv)
+  ) {
     mainContent.style.display = "none";
     clearInterval(id);
     document.querySelector(".ship").remove();
@@ -46,17 +48,20 @@ const playerLost = function (
     backgroundMusic.pause();
     myModal.show();
     document.querySelector(".all-enemies").style.top = 0 + "px";
-    let users = JSON.parse(localStorage.getItem('users'));
-    foundUser(users,username).lastScore = spaceShip.score;
-    localStorage.setItem('users',JSON.stringify(users));
-    let tbody = document.querySelector('tbody');
-    tbody.innerHTML = '';
-    displayData(tbody,users);
+    let users = JSON.parse(localStorage.getItem("users"));
+    foundUser(users, username).lastScore = spaceShip.score;
+    localStorage.setItem("users", JSON.stringify(users));
+    let tbody = document.querySelector("tbody");
+    tbody.innerHTML = "";
+    displayData(tbody, users); //Refreshes the
+    clearInterval(count);
+    timerDiv.textContent = "2:00";
+    timerDiv.style.display = "none";
   }
 };
 
 function timerIsFinshed(timerDiv) {
-  if(timerDiv.textContent === '0'){
+  if (timerDiv.textContent === "0") {
     return true;
   }
   return false;
@@ -118,7 +123,7 @@ const welcomeUserMessage = (username) => {
   welcomeText.appendChild(usernamTextWelcome);
 };
 
-const displayData = (container,users) => {
+const displayData = (container, users) => {
   // let users = JSON.parse(localStorage.getItem("users"));
   users.forEach((element) => {
     let tr = document.createElement("tr");
@@ -134,17 +139,18 @@ const displayData = (container,users) => {
 
 const countDownTimer = (timerDiv) => {
   let timeInSeconds = 119; //as the timer starts a second later than the game starts
-  let count = setInterval(function () {
+  let count;
+  return (count = setInterval(function () {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    timerDiv.textContent = `${minutes}:${seconds}`;
+    document.querySelector(".timer").textContent = `${minutes}:${seconds}`;
     if (timeInSeconds === 0) {
       clearInterval(count);
       timerDiv.textContent = "0";
     } else {
       timeInSeconds--;
     }
-  }, 1000);
+  }, 1000));
 };
 export {
   foundUser,
@@ -156,4 +162,5 @@ export {
   welcomeUserMessage,
   displayData,
   countDownTimer,
+  // count,
 };

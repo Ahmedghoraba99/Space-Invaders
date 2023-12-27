@@ -6,26 +6,28 @@ import {
   welcomeUserMessage,
   displayData,
   countDownTimer,
+  // count,
 } from "./function.js";
 
 window.addEventListener("DOMContentLoaded", function () {
-  let backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
-  let myModal = new bootstrap.Modal(document.getElementById("myModal"));
-  let myButton = document.getElementById("myButton");
-  let mainContent = document.querySelector(".main-container");
-  let enemyContainer = document.querySelector(".all-enemies");
-  let searchParams = new URLSearchParams(location.search);
-  let tbody = document.getElementById("tbody");
-  let queryParams = searchParams.get("name");
+  const backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
+  const myModal = new bootstrap.Modal(document.getElementById("myModal"));
+  const myButton = document.getElementById("myButton");
+  const closeButton = document.querySelector("#close");
+  const mainContent = document.querySelector(".main-container");
+  const enemyContainer = document.querySelector(".all-enemies");
+  const searchParams = new URLSearchParams(location.search);
+  const tbody = document.getElementById("tbody");
+  const queryParams = searchParams.get("name");
   const timerDiv = document.querySelector(".timer");
 
   const StartGame = function (container, enemyContainer) {
-    countDownTimer(timerDiv);
+    const timer = countDownTimer(timerDiv);
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
-    const spaceShip= new Ship(mainContent, {});
+    const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
 
-    let id = setInterval(() => {
+    const id = setInterval(() => {
       enemies.addEnemyMovement(container);
       enemies.resetTheEnemyWave();
       spaceShip.checkCollisions([...document.querySelectorAll(".a")]);
@@ -43,25 +45,22 @@ window.addEventListener("DOMContentLoaded", function () {
         enemyContainer,
         queryParams,
         timerDiv,
-        spaceShip
+        spaceShip,
+        timer
       );
     }, 40);
   };
 
   if (queryParams != null) {
     welcomeUserMessage(queryParams);
-    displayData(tbody,JSON.parse(localStorage.getItem('users')));
+    displayData(tbody, JSON.parse(localStorage.getItem("users")));
     myModal.show();
     mainContent.style.display = "none";
     myButton.click();
-
-    let closeButton = document.querySelector("#close");
     closeButton.addEventListener("click", function () {
       myModal.hide();
       mainContent.style.display = "block";
       StartGame(mainContent, enemyContainer);
-      countDownTimer(timerDiv);
-
       backgroundMusic.play();
     });
   } else {
