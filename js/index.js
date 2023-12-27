@@ -5,7 +5,7 @@ window.addEventListener('load',function(){
     let errorText = document.querySelector('span');
     let users = localStorage.users === undefined ? []: JSON.parse(localStorage.users);
     let LeavelSelected = this.document.querySelector('select');
-    localStorage.setItem("leavel", '300');
+    localStorage.setItem("level", '300');
 
     btnSumbitForm.addEventListener('submit',function(event){
         event.preventDefault();
@@ -22,7 +22,7 @@ window.addEventListener('load',function(){
     });
 
     LeavelSelected.addEventListener('change',function(){
-        localStorage.setItem('leavel', LeavelSelected.value);
+        localStorage.setItem('level', LeavelSelected.value);
     });
 });
 

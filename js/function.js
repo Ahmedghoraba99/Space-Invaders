@@ -2,10 +2,15 @@ const hitSound = new Audio("../soundEffects/invaderkilled.wav");
 
 //user is found or not
 const foundUser = function (users, username) {
-  return users.find(
+  let user = users.find(
     (ele) => ele.name.trim().toLowerCase() === username.toLowerCase()
   );
+  return user;
 };
+
+const updateUser = function(users){
+
+}
 
 // add user
 const addUserData = function (users, username) {
@@ -28,18 +33,34 @@ const playerLost = function (
   myModal,
   id,
   backgroundMusic,
-  enemyContainer
+  enemyContainer,
+  username,
+  timerDiv,
+  spaceShip
 ) {
-  if (shipExploded || enemyContainerTouchedTheBottom(enemyContainer)) {
+  if (shipExploded || enemyContainerTouchedTheBottom(enemyContainer)|| timerIsFinshed(timerDiv)) {
     mainContent.style.display = "none";
     clearInterval(id);
     document.querySelector(".ship").remove();
-    myModal.show();
     [...document.querySelectorAll(".enemiesRow")].forEach((el) => el.remove());
     backgroundMusic.pause();
+    myModal.show();
     document.querySelector(".all-enemies").style.top = 0 + "px";
+    let users = JSON.parse(localStorage.getItem('users'));
+    foundUser(users,username).lastScore = spaceShip.score;
+    localStorage.setItem('users',JSON.stringify(users));
+    let tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+    displayData(tbody,users);
   }
 };
+
+function timerIsFinshed(timerDiv) {
+  if(timerDiv.textContent === '0'){
+    return true;
+  }
+  return false;
+}
 
 function isShipCollided(enmy, object) {
   const objectPosition = object.getBoundingClientRect();
@@ -97,8 +118,8 @@ const welcomeUserMessage = (username) => {
   welcomeText.appendChild(usernamTextWelcome);
 };
 
-const displayData = (container) => {
-  let users = JSON.parse(localStorage.getItem("users"));
+const displayData = (container,users) => {
+  // let users = JSON.parse(localStorage.getItem("users"));
   users.forEach((element) => {
     let tr = document.createElement("tr");
     let nameRow = document.createElement("td");

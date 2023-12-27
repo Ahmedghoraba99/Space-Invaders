@@ -6,7 +6,6 @@ import {
   welcomeUserMessage,
   displayData,
   countDownTimer,
-  foundUser,
 } from "./function.js";
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -23,7 +22,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const StartGame = function (container, enemyContainer) {
     countDownTimer(timerDiv);
     const enemies = new Enemy(enemyContainer, {}, 5, 6);
-    const spaceShip = new Ship(mainContent, {});
+    const spaceShip= new Ship(mainContent, {});
     spaceShip.addShipMovment();
 
     let id = setInterval(() => {
@@ -41,13 +40,17 @@ window.addEventListener("DOMContentLoaded", function () {
         myModal,
         id,
         backgroundMusic,
-        enemyContainer
+        enemyContainer,
+        queryParams,
+        timerDiv,
+        spaceShip
       );
     }, 40);
   };
+
   if (queryParams != null) {
     welcomeUserMessage(queryParams);
-    displayData(tbody);
+    displayData(tbody,JSON.parse(localStorage.getItem('users')));
     myModal.show();
     mainContent.style.display = "none";
     myButton.click();
