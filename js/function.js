@@ -67,7 +67,8 @@ const gameEndSequence = function (
   if (
     shipExploded ||
     enemyContainerTouchedTheBottom(enemyContainer) ||
-    timerIsFinshed(timerDiv)
+    timerIsFinshed(timerDiv) ||
+    spaceShip.score >= 300
   ) {
     mainContent.style.display = "none";
     clearInterval(id);

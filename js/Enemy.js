@@ -19,7 +19,7 @@ export class Enemy {
     this.height = this.#element.offsetHeight;
     this.container = container;
     this.movementDirection = "right";
-    this.verticalSpeed = verticalSpeed;
+    this.verticalSpeed = verticalSpeed || 20;
   }
   /**
    * Get the offsetLeft value of the element.
