@@ -10,6 +10,7 @@ import {
 } from "./function.js";
 
 window.addEventListener("DOMContentLoaded", function () {
+  //Aquiring required Data (audio,HTML elements)
   const backgroundMusic = new Audio("../soundEffects/themeSong.mp3");
   const myModal = new bootstrap.Modal(document.getElementById("myModal"));
   const myButton = document.getElementById("myButton");
@@ -20,15 +21,21 @@ window.addEventListener("DOMContentLoaded", function () {
   const tbody = document.getElementById("tbody");
   const queryParams = searchParams.get("name");
   const timerDiv = document.querySelector(".timer");
-  const btnCloseGame = document.querySelector('.btn-close');
+  const btnCloseGame = document.querySelector(".btn-close");
+  let level = parseInt(localStorage.getItem("level"));
 
+  /**
+   * StartGame function initializes the game and starts the game loop.
+   *
+   * @param {HTMLElement} container - The container element where the game will be rendered.(ship, enemies and bullets)
+   * @param {HTMLElement} enemyContainer - The container element where the enemies will be rendered and moved.
+   */
   const StartGame = function (container, enemyContainer) {
     const timer = countDownTimer(timerDiv);
-    const enemies = new Enemy(enemyContainer, {}, 5, 6);
+    const enemies = new Enemy(enemyContainer, {}, 5, 6, level);
     const spaceShip = new Ship(mainContent, {});
     spaceShip.addShipMovment();
-
-    const id = setInterval(() => {
+    const gameInterval = setInterval(() => {
       enemies.addEnemyMovement(container);
       enemies.resetTheEnemyWave();
       spaceShip.checkCollisions([...document.querySelectorAll(".a")]);
@@ -36,12 +43,12 @@ window.addEventListener("DOMContentLoaded", function () {
         [...document.querySelectorAll(".a")],
         spaceShip.gun
       );
-
+      //Initializing the game shut down logic
       playerLost(
         shipExploded,
         mainContent,
         myModal,
-        id,
+        gameInterval,
         backgroundMusic,
         enemyContainer,
         queryParams,
@@ -51,7 +58,7 @@ window.addEventListener("DOMContentLoaded", function () {
       );
     }, 40);
   };
-
+  //Handling the welcome message and data display and user interaction logic
   if (queryParams != null) {
     welcomeUserMessage(queryParams);
     displayData(tbody, JSON.parse(localStorage.getItem("users")));
@@ -66,10 +73,9 @@ window.addEventListener("DOMContentLoaded", function () {
       timerDiv.style.display = "block";
       backgroundMusic.play();
     });
-    btnCloseGame.addEventListener('click',function(){
-      location.href = '../index.html';
+    btnCloseGame.addEventListener("click", function () {
+      location.href = "../index.html";
     });
-
   } else {
     window.location.href = "../index.html";
   }

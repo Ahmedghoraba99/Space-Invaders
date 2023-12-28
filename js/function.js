@@ -7,9 +7,12 @@ const foundUser = function (users, username) {
   return user;
 };
 
-const updateUser = function (users) {};
-
-// add user
+/**
+ * Adds user data to the users array(Works using local storage).
+ *
+ * @param {array} users - The array of users.
+ * @param {string} username - The username to be added.
+ */
 const addUserData = function (users, username) {
   let addObj = {
     name: username,
@@ -18,12 +21,36 @@ const addUserData = function (users, username) {
   users.push(addObj);
 };
 
-// validate user
+/**
+ * Checks if a given username is valid.
+ * @param {string} username - The username to be validated.
+ * @return {boolean} True if the username is valid, false otherwise.
+ */
 const isValidName = function (username) {
   const usernameRegex = /^[a-zA-Z_0-9]{3,16}/;
   return usernameRegex.test(username);
 };
 
+/**
+ * Checks if the player has lost the game based on certain conditions and performs necessary actions.
+ * If the player has lost the game, the game is stopped and the modal is displayed.
+ * The player's score is stored in the local storage.
+ * The player's username is stored in the local storage.
+ * The player's last score is stored in the local storage.
+ * The game timer Resets
+ * Enemy container is removed and the background music is stopped.
+ *
+ * @param {boolean} shipExploded - Indicates if the ship has exploded.
+ * @param {HTMLElement} mainContent - The main content element.
+ * @param {Modal} myModal - The modal object.
+ * @param {number} id - The ID of the interval.
+ * @param {HTMLAudioElement} backgroundMusic - The background music element.
+ * @param {HTMLElement} enemyContainer - The enemy container element.
+ * @param {string} username - The username of the player.
+ * @param {HTMLElement} timerDiv - The timer div element.
+ * @param {SpaceShip} spaceShip - The space ship object.
+ * @param {number} count - Timer counter of the game.
+ */
 const playerLost = function (
   shipExploded,
   mainContent,
@@ -49,7 +76,7 @@ const playerLost = function (
     myModal.show();
     document.querySelector(".all-enemies").style.top = 0 + "px";
     let users = JSON.parse(localStorage.getItem("users"));
-    foundUser(users, username).lastScore = spaceShip.score;
+    foundUser(users, username).lastScore = spaceShip.score; //???????????
     localStorage.setItem("users", JSON.stringify(users));
     let tbody = document.querySelector("tbody");
     tbody.innerHTML = "";
@@ -60,23 +87,30 @@ const playerLost = function (
   }
 };
 
-function timerIsFinshed(timerDiv) {
+const timerIsFinshed = function (timerDiv) {
   if (timerDiv.textContent === "0") {
     return true;
   }
   return false;
-}
+};
 
-function isShipCollided(enmy, object) {
+/**
+ * Checks if the ship collides with an enemy object.
+ *
+ * @param {DOMRect} enemy - The bounding rectangle of the enemy object.
+ * @param {DOMRect} object - The bounding rectangle of the ship object.
+ * @return {boolean} Returns true if the ship collides with the enemy, otherwise returns false.
+ */
+const isShipCollided = function (enemy, object) {
   const objectPosition = object.getBoundingClientRect();
-  const enmyPosition = enmy.getBoundingClientRect();
+  const enemyPosition = enemy.getBoundingClientRect();
   return (
-    objectPosition.left < enmyPosition.right &&
-    objectPosition.right > enmyPosition.left &&
-    objectPosition.top < enmyPosition.bottom &&
-    objectPosition.bottom > enmyPosition.top
+    objectPosition.left < enemyPosition.right &&
+    objectPosition.right > enemyPosition.left &&
+    objectPosition.top < enemyPosition.bottom &&
+    objectPosition.bottom > enemyPosition.top
   );
-}
+};
 
 const clearAllBullets = function (bullets) {
   bullets.forEach((bullet) => {
@@ -84,15 +118,20 @@ const clearAllBullets = function (bullets) {
   });
 };
 
-function enemyContainerTouchedTheBottom(container) {
+/**
+ * Check if the enemy container has touched the bottom of the viewport.
+ * @param {HTMLElement} container - The enemy container element.
+ * @return {boolean} Returns true if the container has touched the bottom of the viewport, otherwise false.
+ */
+const enemyContainerTouchedTheBottom = function (container) {
   const containerPosition = container.getBoundingClientRect();
   const containerBottom = containerPosition.bottom;
   const windowHeight =
     window.innerHeight || document.documentElement.clientHeight;
   return containerBottom >= windowHeight;
-}
+};
 
-function isShipDestroied(enemies, object) {
+const isShipDestroied = function (enemies, object) {
   //Note: dosen't work with forEach loop
   for (let i = 0; i < enemies.length; i++) {
     const enemy = enemies[i];
@@ -110,7 +149,7 @@ function isShipDestroied(enemies, object) {
   }
 
   return false;
-}
+};
 
 const welcomeUserMessage = (username) => {
   let welcomeText = document.querySelector(".modal-title");
@@ -124,7 +163,6 @@ const welcomeUserMessage = (username) => {
 };
 
 const displayData = (container, users) => {
-  // let users = JSON.parse(localStorage.getItem("users"));
   users.forEach((element) => {
     let tr = document.createElement("tr");
     let nameRow = document.createElement("td");
@@ -162,5 +200,4 @@ export {
   welcomeUserMessage,
   displayData,
   countDownTimer,
-  // count,
 };

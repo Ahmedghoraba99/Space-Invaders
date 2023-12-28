@@ -10,7 +10,7 @@ export class Enemy {
    * @param {number} enemiesInRow - The number of enemies in each row.
    * @param {number} numberOfRows - The number of rows of enemies.
    */
-  constructor(container, style, enemiesInRow, numberOfRows) {
+  constructor(container, style, enemiesInRow, numberOfRows, verticalSpeed) {
     this.enemiesInRow = enemiesInRow;
     this.numberOfRows = numberOfRows;
     this.#element = this.#createEnemy(container, style);
@@ -18,6 +18,7 @@ export class Enemy {
     this.height = this.#element.offsetHeight;
     this.container = container;
     this.movementDirection = "right";
+    this.verticalSpeed = verticalSpeed;
   }
   /**
    * Get the offsetLeft value of the element.
@@ -76,9 +77,17 @@ export class Enemy {
 
   #moveEnemiesDown() {
     let currentTop = parseInt(this.#element.style.top) || 0;
-    this.#element.style.top = currentTop + 20 + "px";
+    this.#element.style.top = currentTop + this.verticalSpeed + "px";
   }
 
+  /**
+   * Adds movement to the enemy.
+   * the enemy moves right or left depending on the movementDirection
+   * if the enemy reaches the edge of the container, it changes direction
+   * and moves down a step depending on the level of the game
+   * @return {void}
+   * @memberof Enemy
+   */
   addEnemyMovement() {
     if (this.movementDirection === "right") {
       this.#element.style.left = `${this.left + 3}px`;
@@ -88,7 +97,6 @@ export class Enemy {
       }
     } else {
       this.#element.style.left = `${this.left - 3}px`;
-      // console.log(this.#element.offsetLeft);
       if (this.left <= 0) {
         this.movementDirection = "right";
         this.#moveEnemiesDown();

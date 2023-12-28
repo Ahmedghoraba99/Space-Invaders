@@ -190,13 +190,6 @@ export class Ship {
       this.#removeClasses(object, ["explosion"]);
     }, 50);
   }
-  swerveEffect() {
-    this.#addClasses(this.gun, ["swerve"]);
-    setTimeout(() => {
-      this.#removeClasses(this.gun, ["swerve"]);
-    }, 50);
-  }
-  ///MODIFY TO INCREASE SCORE IN HTML
   #increaseScore(points) {
     this.#score += points;
     document.querySelector(".score").innerText = this.#score;
