@@ -2,7 +2,14 @@
   font-family: arcadeFont;
   src: url(../fonts/arcade.TTF);
 }
-
+@font-face {
+  font-family: titleArcade;
+  src: url(../fonts/title.ttf);
+}
+@font-face {
+  font-family: namesArcade;
+  src: url(../fonts/namesArcade.ttf);
+}
 body {
   margin: 0;
   overflow: hidden;
@@ -23,18 +30,14 @@ body {
 .all-enemies {
   width: max-content;
   position: relative;
-  /* border: 1px solid blue; */
+  border-bottom: #31b601 1px dashed;
 }
 .bomb {
   background-image: url("../images/bomb.png");
+  background-repeat: no-repeat;
   background-size: contain;
   width: 60px;
   height: 60px;
-}
-
-.swerve {
-  transform: rotateY(-45deg);
-  /* Adjust the angle as needed for left turn */
 }
 .ship {
   background-image: url("../images/ship.png");
@@ -67,7 +70,6 @@ body {
   background-size: 60px 60px;
   width: 60px;
   height: 60px;
-  /* z-index: 9; */
   margin-top: 10px;
   margin: 0;
   overflow: hidden;
@@ -84,31 +86,21 @@ body {
   height: 100vb;
   background-image: url("../images/background.png");
   background-size: 600px 900px;
-  /* border: 1px solid red; */
-}
-
-.ship:hover {
-  transform: rotateY(-45deg);
-  /* Adjust the angle as needed for left turn */
 }
 
 .ship {
   background-image: url("../images/ship.png");
   background-size: contain;
 }
-
 .enemies {
   position: relative;
   background-repeat: no-repeat;
-  /* border: 1px solid red; */
   background-image: url("../images/enemy.png");
   background-size: 60px 60px;
   width: 60px;
   height: 60px;
-  /* z-index: 9; */
   margin-top: 10px;
 }
-
 .timer {
   position: fixed;
   top: 10px;
@@ -126,4 +118,27 @@ body {
   font-family: arcadeFont;
   color: #4cff00;
   font-size: 30px;
+  z-index: 9999;
+}
+
+.modal-dialog {
+  margin-top: 10%;
+  font-family: titleArcade;
+}
+.modal-header {
+  font-family: titleArcade;
+}
+td {
+  font-family: namesArcade;
+}
+#close {
+  font-family: titleArcade;
+  background-color: #4cff00;
+  border: #4cff00;
+}
+#close:hover {
+  background-color: #31b601;
+}
+#submitBtn:hover {
+  cursor: pointer;
 }

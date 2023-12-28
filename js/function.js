@@ -34,6 +34,7 @@ const isValidName = function (username) {
 /**
  * Checks if the player has lost the game based on certain conditions and performs necessary actions.
  * If the player has lost the game, the game is stopped and the modal is displayed.
+ * Otherwise it keeps the timer running and display a messege at the end of the game.
  * The player's score is stored in the local storage.
  * The player's username is stored in the local storage.
  * The player's last score is stored in the local storage.
@@ -51,7 +52,7 @@ const isValidName = function (username) {
  * @param {SpaceShip} spaceShip - The space ship object.
  * @param {number} count - Timer counter of the game.
  */
-const playerLost = function (
+const gameEndSequence = function (
   shipExploded,
   mainContent,
   myModal,
@@ -83,10 +84,21 @@ const playerLost = function (
     displayData(tbody, users); //Refreshes the
     clearInterval(count);
     timerDiv.textContent = "2:00";
+    afterGameMessage(username, spaceShip.score);
     timerDiv.style.display = "none";
   }
 };
-
+const afterGameMessage = function (username, score) {
+  if (score < 300) {
+    document.querySelector(
+      ".modal-title"
+    ).textContent = `Oops! Game Over!  ${username}`;
+  } else {
+    document.querySelector(
+      ".modal-title"
+    ).textContent = `Congratulations! You won!  ${username}`;
+  }
+};
 const timerIsFinshed = function (timerDiv) {
   if (timerDiv.textContent === "0") {
     return true;
@@ -194,7 +206,7 @@ export {
   foundUser,
   addUserData,
   isValidName,
-  playerLost,
+  gameEndSequence,
   isShipDestroied,
   clearAllBullets,
   welcomeUserMessage,

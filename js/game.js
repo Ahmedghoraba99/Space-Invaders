@@ -1,7 +1,7 @@
 import { Enemy } from "./Enemy.js";
 import { Ship } from "./Ship.js";
 import {
-  playerLost,
+  gameEndSequence,
   isShipDestroied,
   welcomeUserMessage,
   displayData,
@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", function () {
         spaceShip.gun
       );
       //Initializing the game shut down logic
-      playerLost(
+      gameEndSequence(
         shipExploded,
         mainContent,
         myModal,

@@ -9,6 +9,7 @@ export class Enemy {
    * @param {string} style - The CSS style to be applied to the enemy element.
    * @param {number} enemiesInRow - The number of enemies in each row.
    * @param {number} numberOfRows - The number of rows of enemies.
+   * @param {number} verticalSpeed - The vertical speed of the enemies. (level of difficulty)
    */
   constructor(container, style, enemiesInRow, numberOfRows, verticalSpeed) {
     this.enemiesInRow = enemiesInRow;
