@@ -89,17 +89,21 @@ const gameEndSequence = function (
     timerDiv.style.display = "none";
   }
 };
+
+
 const afterGameMessage = function (username, score) {
   if (score < 300) {
     document.querySelector(
-      ".modal-title"
-    ).textContent = `Oops! Game Over!  ${username}`;
+      ".winer"
+    ).textContent = `Oops! Game Over!`;
   } else {
     document.querySelector(
-      ".modal-title"
-    ).textContent = `Congratulations! You won!  ${username}`;
+      ".winer"
+    ).textContent = `Congratulations! You won! `;
   }
 };
+
+
 const timerIsFinshed = function (timerDiv) {
   if (timerDiv.textContent === "0") {
     return true;

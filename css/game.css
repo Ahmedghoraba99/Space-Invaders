@@ -125,12 +125,17 @@ body {
   margin-top: 10%;
   font-family: titleArcade;
 }
+
 .modal-header {
   font-family: titleArcade;
+}
+.winer{
+  color: red;
 }
 td {
   font-family: namesArcade;
 }
+
 #close {
   font-family: titleArcade;
   background-color: #4cff00;
